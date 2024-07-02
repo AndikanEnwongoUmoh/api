@@ -11,16 +11,15 @@ def hello():
     client_ip = request.remote_addr
 
     try:
-        # Fetch the actual city based on client IP using ip2geotools
         city = fetch_city(client_ip)
     except Exception as e:
-        city = "New York"  # Default city
+        city = "New York"
 
     try:
-        # Fetch the actual temperature based on city using OpenWeatherMap API
+
         temperature = fetch_temperature(city)
     except Exception as e:
-        temperature = 11  # Default to a static temperature if fetching fails
+        temperature = 11
 
     greeting = f"Hello, {visitor_name}!, the temperature is {temperature} degrees Celsius in {city}"
 
