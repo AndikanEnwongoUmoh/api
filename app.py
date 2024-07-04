@@ -4,6 +4,10 @@ import os
 
 app = Flask(__name__)
 
+# Set your API keys here
+os.environ['IPGEOLOCATION_API_KEY'] = '5891dbc2678a42d89147271e902ac802'
+os.environ['OPENWEATHERMAP_API_KEY'] = '82b6601fa9a99176b3c29f354114207b'
+
 # Function to fetch public IP address
 def get_public_ip():
     try:
