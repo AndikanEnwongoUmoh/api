@@ -4,6 +4,17 @@ import os
 
 app = Flask(__name__)
 
+# Function to fetch public IP address
+def get_public_ip():
+    try:
+        response = requests.get('https://api.ipify.org?format=json')
+        response.raise_for_status()
+        ip = response.json().get('ip')
+        return ip
+    except requests.exceptions.RequestException as e:
+        print(f"Error fetching public IP address: {str(e)}")
+        return None
+
 # Function to fetch IP geolocation using ipgeolocation.io
 def fetch_geolocation(client_ip):
     try:
@@ -41,6 +52,10 @@ def fetch_temperature(lat, lon):
 def hello():
     visitor_name = request.args.get('visitor_name', 'Unknown')
     client_ip = request.headers.get('X-Forwarded-For', request.remote_addr)
+
+    # If the IP is a private IP, use the public IP instead
+    if client_ip.startswith('192.168.') or client_ip.startswith('10.') or client_ip.startswith('172.'):
+        client_ip = get_public_ip()
 
     # Fetch geolocation based on IP
     lat, lon, city = fetch_geolocation(client_ip)
