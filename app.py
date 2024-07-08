@@ -1,3 +1,4 @@
+# hosting the api
 from flask import Flask, request, jsonify
 import requests
 import os
